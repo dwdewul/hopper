@@ -26,7 +26,10 @@ Enemy.prototype.update = function(dt) {
 
     // Check for collision with enemies or barrier-walls
     checkCollision(this);
-    scoreDiv.innerHTML = "Game Level: " + gameLevel;
+    levelDiv.innerHTML = "Game Level: " + gameLevel;
+    scoreDiv.innerHTML = "Score: " + score(gameLevel, lives);
+    livesDiv.innerHTML = "Lives: " + lives;
+
 };
 
 // Draw the enemy on the screen, required method for game
@@ -45,7 +48,7 @@ var Player = function(x=202.5, y=400, speed=50) {
 };
 
 Player.prototype.update = function() {
-
+    loseGame(lives, allEnemies);
 };
 
 // Draw the player on the screen, required method for game
@@ -84,6 +87,17 @@ Player.prototype.handleInput = function(keyPress) {
 };
 
 
+var loseGame = function(lives, enemies){
+    if(lives == 0){
+        if(confirm("You lost! Time to play again!")){
+            location.reload(true);
+        }else{
+            lives = 0;
+            score();
+        }
+    }
+}
+
 var checkCollision = function(anEnemy) {
     // Check for collision between enemy and player
     if (
@@ -94,6 +108,7 @@ var checkCollision = function(anEnemy) {
 
         player.x = 202.5;
         player.y = 383;
+        lives-=1;
     }
     // Check to see if player hits top of board
     if (player.y+20 <= 0) {
@@ -113,6 +128,15 @@ var addLevel = function(){
     console.log(gameLevel);
 };
 
+var score = function(gameLevel=0, lives=0){
+    if(gameLevel == 1){
+        return 0;
+    }
+    return 10 * gameLevel * lives;
+}
+
+
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
@@ -122,12 +146,15 @@ var allEnemies = [];
 var player = new Player();
 // var score = 0;
 var gameLevel = 1;
+var lives = 3;
+var levelDiv = document.getElementById("level");
 var scoreDiv = document.getElementById("score");
-
+var livesDiv = document.getElementById("lives");
 
 var enemy = new Enemy(0, Math.random() * 184 + 50, 50);
 
 allEnemies.push(enemy);
+
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
