@@ -89,7 +89,8 @@ Player.prototype.handleInput = function(keyPress) {
 
 var loseGame = function(lives, enemies){
     if(lives == 0){
-        if(confirm("You lost! Time to play again!")){
+        var msg = "You lost! Time to play again!";
+        if(confirm(msg)){
             location.reload(true);
         }else{
             lives = 0;
