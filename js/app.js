@@ -86,18 +86,15 @@ Player.prototype.handleInput = function(keyPress) {
 };
 
 /*
-This function sees if the player has any more lives, and if they do not,
-then they are prompted to reload the page.
+Gives a message to the user to replay and also removes the game display information.
 */
 var loseGame = function(lives, enemies){
-    if(lives == 0){
-        var msg = "You lost! Time to play again!";
-        if(confirm(msg)){
-            location.reload();
-        }else{
-            lives = 0;
-            score();
-        }
+    if(lives <= 0){
+        var msg = "You lost! Reload to play again!";
+        lostDiv.innerHTML = msg;
+        scoreDiv.parentNode.remove(scoreDiv);
+        livesDiv.parentNode.remove(livesDiv);
+        levelDiv.parentNode.remove(levelDiv);
     }
 }
 
@@ -137,7 +134,7 @@ var addLevel = function(){
 };
 
 // This function returns the score
-var score = function(gameLevel=0, lives=0){
+var score = function(gameLevel=1, lives=3){
     if(gameLevel == 1){
         return 0;
     }
@@ -158,6 +155,7 @@ var lives = 3;
 var levelDiv = document.getElementById("level");
 var scoreDiv = document.getElementById("score");
 var livesDiv = document.getElementById("lives");
+var lostDiv = document.getElementById("lost-msg");
 
 var enemy = new Enemy(0, Math.random() * 184 + 50, 50);
 
