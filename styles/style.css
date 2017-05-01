@@ -1,6 +1,11 @@
+body{
+    background-color: lightgray;
+}
+
 .game-info{
     float: left;
-    background-color: lightgray;
+    background-color: black;
+    color: white;
     margin: 5px;
     margin-top:50px;
     margin-right:20px;

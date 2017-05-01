@@ -115,12 +115,12 @@ var checkCollision = function(anEnemy) {
         lives-=1;
     }
     // Check to see if player hits top of board
-    if (player.y+20 <= 0) {
+    if (player.y+15 <= 0) {
         addLevel(this);
         player.x = 202.5;
         player.y = 383;
 
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = 'lightgray';
         ctx.fillRect(0, 0, 505, 171);
 
         }
