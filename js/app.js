@@ -19,7 +19,7 @@ Enemy.prototype.update = function(dt) {
     // all computers.
     this.x += this.speed * dt;
 
-    // make enemies loop to left side of canvas after reaching canvas.width
+    // Make enemies loop to left side of canvas after reaching canvas.width
     if (this.x >= 505) {
         this.x = 0;
     }
@@ -55,7 +55,6 @@ Player.prototype.update = function() {
 // Display score
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    // displayScoreLevel(score, gameLevel);
 
 };
 
@@ -86,12 +85,15 @@ Player.prototype.handleInput = function(keyPress) {
     }
 };
 
-
+/*
+This function sees if the player has any more lives, and if they do not,
+then they are prompted to reload the page.
+*/
 var loseGame = function(lives, enemies){
     if(lives == 0){
         var msg = "You lost! Time to play again!";
         if(confirm(msg)){
-            location.reload(true);
+            location.reload();
         }else{
             lives = 0;
             score();
@@ -99,6 +101,10 @@ var loseGame = function(lives, enemies){
     }
 }
 
+/*
+This function checks to see if the player had collided with either an
+enemy or the top row; if they hit the top row then the game adds another level
+*/
 var checkCollision = function(anEnemy) {
     // Check for collision between enemy and player
     if (
@@ -123,12 +129,14 @@ var checkCollision = function(anEnemy) {
         }
     };
 
+// Function for adding another level, and therefor another bug to the screen
 var addLevel = function(){
     allEnemies.push(new Enemy(0, Math.random() * 184 + 50, 50));
     gameLevel = gameLevel + 1;
     console.log(gameLevel);
 };
 
+// This function returns the score
 var score = function(gameLevel=0, lives=0){
     if(gameLevel == 1){
         return 0;
@@ -141,11 +149,10 @@ var score = function(gameLevel=0, lives=0){
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-// Enemy randomly placed vertically within section of canvas
-// Declare new score and gameLevel variables to store score and level
+
 var allEnemies = [];
 var player = new Player();
-// var score = 0;
+
 var gameLevel = 1;
 var lives = 3;
 var levelDiv = document.getElementById("level");

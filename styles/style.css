@@ -1,0 +1,10 @@
+.game-info{
+    float: left;
+    background-color: lightgray;
+    margin: 5px;
+    margin-top:50px;
+    margin-right:20px;
+    padding: 10px;
+    border-radius: 7px;
+    font-family: monospace;
+}
