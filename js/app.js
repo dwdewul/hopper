@@ -1,3 +1,4 @@
+'use strict';
 // Enemies our player must avoid
 var Enemy = function(x, y, speed) {
     // Variables applied to each of our instances go here,
@@ -25,7 +26,7 @@ Enemy.prototype.update = function(dt) {
     }
 
     // Check for collision with enemies or barrier-walls
-    checkCollision(this);
+    this.checkCollision(this);
     levelDiv.innerHTML = "Game Level: " + gameLevel;
     scoreDiv.innerHTML = "Score: " + score(gameLevel, lives);
     livesDiv.innerHTML = "Lives: " + lives;
@@ -40,10 +41,10 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var Player = function(x=202.5, y=400, speed=50) {
+var Player = function(x=202.5, y=400, step=50) {
     this.x = x;
     this.y = y;
-    this.speed = speed;
+    this.step = step;
     this.sprite = 'images/char-boy.png';
 };
 
@@ -58,30 +59,18 @@ Player.prototype.render = function() {
 
 };
 
-Player.prototype.checkPos = function(x, y){
-    if(player.x > 400){
-        return true;
-    }
-    if(player.y > 383){
-        return true;
-    }
-    if(player.x < 3){
-        return true;
-    }
-};
-
 Player.prototype.handleInput = function(keyPress) {
     if (keyPress == 'left' && player.x > 3) {
-        player.x -= player.speed;
+        player.x -= player.step;
     }
     if (keyPress == 'up') {
-        player.y -= player.speed;
+        player.y -= player.step;
     }
     if (keyPress == 'right' && player.x < 395) {
-        player.x += player.speed;
+        player.x += player.step;
     }
     if (keyPress == 'down' && player.y < 400) {
-        player.y += player.speed;
+        player.y += player.step;
     }
 };
 
@@ -102,7 +91,7 @@ var loseGame = function(lives, enemies){
 This function checks to see if the player had collided with either an
 enemy or the top row; if they hit the top row then the game adds another level
 */
-var checkCollision = function(anEnemy) {
+Enemy.prototype.checkCollision = function(anEnemy) {
     // Check for collision between enemy and player
     if (
         player.y + 131 >= anEnemy.y + 90
@@ -110,11 +99,10 @@ var checkCollision = function(anEnemy) {
         && player.y + 73 <= anEnemy.y + 135
         && player.x + 76 >= anEnemy.x + 11) {
 
-        player.x = 202.5;
-        player.y = 383;
-        lives-=1;
-    }
-    // Check to see if player hits top of board
+            player.x = 202.5;
+            player.y = 383;
+            lives-=1;
+        }
     if (player.y+15 <= 0) {
         addLevel(this);
         player.x = 202.5;
@@ -124,7 +112,10 @@ var checkCollision = function(anEnemy) {
         ctx.fillRect(0, 0, 505, 171);
 
         }
-    };
+    }
+
+    // Check to see if player hits top of board
+
 
 // Function for adding another level, and therefor another bug to the screen
 var addLevel = function(){
@@ -140,7 +131,6 @@ var score = function(gameLevel=1, lives=3){
     }
     return 10 * gameLevel * lives;
 }
-
 
 
 // Now instantiate your objects.
