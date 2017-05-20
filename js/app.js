@@ -49,6 +49,7 @@ var Player = function(x=202.5, y=400, step=50) {
 };
 
 Player.prototype.update = function() {
+    this.checkCollision(this);
     loseGame(lives, allEnemies);
 };
 
@@ -103,6 +104,9 @@ Enemy.prototype.checkCollision = function(anEnemy) {
             player.y = 383;
             lives-=1;
         }
+    }
+
+Player.prototype.checkCollision = function(){
     if (player.y+15 <= 0) {
         addLevel(this);
         player.x = 202.5;
@@ -142,7 +146,7 @@ var player = new Player();
 
 var gameLevel = 1;
 var lives = 3;
-var levelDiv = document.getElementById("level");
+var levelDiv = document.getElementById("level")
 var scoreDiv = document.getElementById("score");
 var livesDiv = document.getElementById("lives");
 var lostDiv = document.getElementById("lost-msg");
