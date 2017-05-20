@@ -26,7 +26,7 @@ Enemy.prototype.update = function(dt) {
     }
 
     // Check for collision with enemies or barrier-walls
-    this.checkCollision(this);
+    this.checkCollision();
     levelDiv.innerHTML = "Game Level: " + gameLevel;
     scoreDiv.innerHTML = "Score: " + score(gameLevel, lives);
     livesDiv.innerHTML = "Lives: " + lives;
@@ -49,7 +49,7 @@ var Player = function(x=202.5, y=400, step=50) {
 };
 
 Player.prototype.update = function() {
-    this.checkCollision(this);
+    this.checkCollision();
     loseGame(lives, allEnemies);
 };
 
@@ -61,17 +61,17 @@ Player.prototype.render = function() {
 };
 
 Player.prototype.handleInput = function(keyPress) {
-    if (keyPress == 'left' && player.x > 3) {
-        player.x -= player.step;
+    if (keyPress == 'left' && this.x > 3) {
+        this.x -= this.step;
     }
     if (keyPress == 'up') {
-        player.y -= player.step;
+        this.y -= this.step;
     }
-    if (keyPress == 'right' && player.x < 395) {
-        player.x += player.step;
+    if (keyPress == 'right' && this.x < 395) {
+        this.x += this.step;
     }
-    if (keyPress == 'down' && player.y < 400) {
-        player.y += player.step;
+    if (keyPress == 'down' && this.y < 400) {
+        this.y += this.step;
     }
 };
 
@@ -95,10 +95,10 @@ enemy or the top row; if they hit the top row then the game adds another level
 Enemy.prototype.checkCollision = function(anEnemy) {
     // Check for collision between enemy and player
     if (
-        player.y + 131 >= anEnemy.y + 90
-        && player.x + 25 <= anEnemy.x + 88
-        && player.y + 73 <= anEnemy.y + 135
-        && player.x + 76 >= anEnemy.x + 11) {
+        player.y + 131 >= this.y + 90
+        && player.x + 25 <= this.x + 88
+        && player.y + 73 <= this.y + 135
+        && player.x + 76 >= this.x + 11) {
 
             player.x = 202.5;
             player.y = 383;
@@ -107,10 +107,10 @@ Enemy.prototype.checkCollision = function(anEnemy) {
     }
 
 Player.prototype.checkCollision = function(){
-    if (player.y+15 <= 0) {
+    if (this.y + 15 <= 0) {
         addLevel(this);
-        player.x = 202.5;
-        player.y = 383;
+        this.x = 202.5;
+        this.y = 383;
 
         ctx.fillStyle = 'lightgray';
         ctx.fillRect(0, 0, 505, 171);
