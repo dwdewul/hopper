@@ -3,7 +3,8 @@
 This is a sample game created partially by me. The resources and engine files were provided by Udacity in their Front-end Engineer Nanodegree program. Most of the code written in the app.js file was written by me to make all of the actual functionality of the game (movement, etc.) work. 
 
 ### How to run it:
-Simply download the repository and then open up index.html.
+Simply download the repository and then open up ```index.html```.
+Alternatively, you can play it here: https://dwdewul.github.io/hopper/
 
 ### How to play it:
 You must get your character across the map from the grass to the water in order to go up another level and increase your score. Be careful with your movements! You only get 3 lives, and the fewer lives you have, the fewer points you get per level.
